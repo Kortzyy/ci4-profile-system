@@ -1,69 +1,148 @@
-# CodeIgniter 4 Application Starter
+# CI4 Profile System
 
-## What is CodeIgniter?
+## Overview
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+CI4 Profile System is a web application built with CodeIgniter 4 that allows users to create and manage user profiles with profile pictures. The system demonstrates essential web development features including file upload validation, image storage, pagination, and search functionality.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Purpose
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+This project was developed as a hands-on activity to demonstrate proficiency in:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- Building a user profile system with photo upload capabilities
+- Implementing file validation and secure image storage
+- Creating paginated data listings
+- Integrating search filters with pagination
 
-## Installation & updates
+## Key Features
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### User Registration
+Users can create new profiles by providing their name, email address, and a profile picture. The form includes validation to ensure all required fields are properly filled.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Profile Picture Upload
+The system allows users to upload profile pictures with strict validation:
+- Only image files are accepted (PNG, JPG, JPEG)
+- Maximum file size is 2MB
+- Images are renamed with unique identifiers to prevent conflicts
+- Files are stored securely in the uploads directory
 
-## Setup
+### User Listing
+All registered users are displayed in a clean table format showing:
+- User ID
+- Profile picture (avatar)
+- Full name
+- Email address
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### Pagination
+The user list is paginated to display 5 users per page, making it easier to navigate through large numbers of records. Navigation links allow users to move between pages.
 
-## Important Change with index.php
+### Search Functionality
+Users can search the directory by name or email address. The search results are also paginated, maintaining consistent performance regardless of the number of matching records.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## Technology Stack
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+- **Backend Framework:** CodeIgniter 4
+- **Frontend:** HTML5, CSS3
+- **Database:** MySQL
+- **Server Requirements:** PHP 7.4 or higher
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## Database Structure
 
-## Repository Management
+The application uses a single table named 'users' with the following fields:
+- id (auto-incrementing primary key)
+- name (user's full name)
+- email (user's email address)
+- avatar (file path to the uploaded profile picture)
+- created_at (timestamp of when the record was created)
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## How It Works
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Creating a User
+1. The user navigates to the create user form
+2. They fill in their name and email address
+3. They select an image file for their profile picture
+4. Upon submission, the system validates all inputs
+5. If validation passes, the image is uploaded and renamed
+6. The user data is saved to the database
+7. The user is redirected to the main listing page
 
-## Server Requirements
+### Viewing Users
+1. The main page queries the database for user records
+2. Results are paginated (5 per page)
+3. Profile pictures are displayed as circular thumbnails
+4. Navigation links appear at the bottom for browsing pages
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+### Searching Users
+1. Users type a search term into the search box
+2. The system searches both name and email fields
+3. Matching results are displayed with pagination
+4. The search term is preserved in the search box for convenience
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Installation Requirements
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+To run this application, you need:
+- A web server with PHP 7.4 or higher
+- MySQL database server
+- Composer for dependency management
+- CodeIgniter 4 framework
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Setup Instructions
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+1. Clone the repository to your web server directory
+2. Install dependencies using Composer
+3. Configure your database connection in the .env file
+4. Create the users table using the provided SQL schema
+5. Create the uploads directory with write permissions
+6. Configure the routes in the Routes.php file
+7. Start the development server or configure your web server
+
+## Validation Rules
+
+The application implements the following validation rules:
+
+- Name field is required
+- Email field is required and must be a valid email format
+- Avatar file must be uploaded
+- Avatar must be an image (PNG, JPG, JPEG)
+- Avatar cannot exceed 2MB in size
+
+## Error Handling
+
+The system gracefully handles various error scenarios:
+- Displaying validation errors when form inputs are invalid
+- Showing upload failure messages when image processing fails
+- Logging errors for debugging purposes
+- Redirecting users back to forms with their previous input preserved
+
+## Learning Outcomes
+
+This project demonstrates understanding of:
+
+- CodeIgniter 4 framework structure (MVC pattern)
+- File upload handling and validation
+- Image processing and storage
+- Database operations using models
+- Pagination implementation
+- Search integration with pagination
+- Session management for flash messages
+- Security practices (CSRF protection, input escaping)
+
+## Future Improvements
+
+Potential enhancements for this project include:
+- User profile editing and deletion
+- Image cropping and resizing
+- AJAX-based search without page reload
+- User authentication and authorization
+- Email notifications
+- Profile picture preview before upload
+- Additional user fields (bio, location, website)
+
+## Submission Requirements
+
+This project includes:
+- Controller file (UserController.php)
+- Model file (UserModel.php)
+- View files (create.php, index.php)
+- Routes configuration
+- Database schema
+- Screenshots of the working application
